@@ -1,0 +1,8 @@
+stages:
+  data_clean:
+    cmd: python starter/data_clean/data_clean.py
+    deps:
+    - starter/data/census.csv
+    - starter/data_clean/data_clean.py
+    outs:
+    - starter/data/census_clean.csv
