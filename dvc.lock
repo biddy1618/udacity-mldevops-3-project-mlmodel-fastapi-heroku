@@ -8,8 +8,8 @@ stages:
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     - path: starter/data_clean/data_clean.py
-      md5: 55564b81f3ba131cff498ec3210c37bf
-      size: 2102
+      md5: c82b1f5448bf791588b5626a1b0bf0f4
+      size: 2150
     outs:
     - path: starter/data/census_clean.csv
       md5: 106111100691ad962e66554cc0e4db3d
@@ -21,5 +21,5 @@ stages:
       md5: 106111100691ad962e66554cc0e4db3d
       size: 3541549
     - path: starter/data_clean/data_clean.py
-      md5: 55564b81f3ba131cff498ec3210c37bf
-      size: 2102
+      md5: c82b1f5448bf791588b5626a1b0bf0f4
+      size: 2150

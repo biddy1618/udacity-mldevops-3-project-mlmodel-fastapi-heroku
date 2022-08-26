@@ -17,6 +17,9 @@ logger = logging.getLogger()
 
 
 def go(args):
+    '''
+    Main function for cleaning.
+    '''
 
     logger.info('Starting cleaning data...')
 
