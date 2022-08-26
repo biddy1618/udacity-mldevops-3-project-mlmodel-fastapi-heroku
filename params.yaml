@@ -1,0 +1,3 @@
+data_clean:
+  data_raw: starter/data/census.csv
+  data_clean: starter/data/census_clean.csv

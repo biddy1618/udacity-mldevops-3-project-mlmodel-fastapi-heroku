@@ -1,13 +1,17 @@
 stages:
   data_clean:
-    cmd: python starter/data_clean/data_clean.py
+    cmd: >-
+      python starter/data_clean/data_clean.py
+      --data_raw ${data_clean.data_raw}
+      --data_clean ${data_clean.data_clean}
     deps:
-    - starter/data/census.csv
+    - ${data_clean.data_raw}
     - starter/data_clean/data_clean.py
     outs:
-    - starter/data/census_clean.csv
+    - ${data_clean.data_clean}
   data_check:
-    cmd: pytest starter/check_data/ -vv --data_path starter/data/census_clean.csv
+    cmd: pytest starter/check_data/ -vv --data_path ${data_clean.data_clean}
     deps:
+    - ${data_clean.data_clean}
     - starter/data_clean/data_clean.py
 

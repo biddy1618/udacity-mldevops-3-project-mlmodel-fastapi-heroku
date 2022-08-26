@@ -171,35 +171,35 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
 
     if not workclass_data.issubset(workclass):
         errors.append(
-            f'`workclass` contains unknown values - \
-                {workclass_data.difference(workclass)}.')
+            ('`workclass` contains unknown values - '
+             f'{workclass_data.difference(workclass)}.'))
     if not education_data.issubset(education):
         errors.append(
-            f'`education` contains unknown values - \
-                {education_data.difference(education)}.')
+            ('`education` contains unknown values - '
+             f'{education_data.difference(education)}.'))
     if not marital_status_data.issubset(marital_status):
         errors.append(
-            f'`marital-status` contains unknown values - \
-                {marital_status_data.difference(marital_status)}.')
+            ('`marital-status` contains unknown values - '
+             f'{marital_status_data.difference(marital_status)}.'))
     if not occupation_data.issubset(occupation):
         errors.append(
-            f'`occupation` contains unknown values - \
-                {occupation_data.difference(occupation)}.')
+            ('`occupation` contains unknown values - '
+             f'{occupation_data.difference(occupation)}.'))
     if not relationship_data.issubset(relationship):
         errors.append(
-            f'`relationship` contains unknown values - \
-                {relationship_data.difference(relationship)}.')
+            ('`relationship` contains unknown values - '
+             f'{relationship_data.difference(relationship)}.'))
     if not sex_data.issubset(sex):
         errors.append(
             f'`sex` contains unknown values - {sex_data.difference(sex)}.')
     if not native_country_data.issubset(native_country):
         errors.append(
-            f'`native-country` contains unknown values - \
-                {native_country_data.difference(native_country)}.')
+            ('`native-country` contains unknown values - '
+             f'{native_country_data.difference(native_country)}.'))
     if prod and not salary_data.issubset(salary):
         errors.append(
-            f'`salary` contains unknown values - \
-                {salary_data.difference(salary)}.')
+            ('`salary` contains unknown values - '
+             f'{salary_data.difference(salary)}.'))
 
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
 
