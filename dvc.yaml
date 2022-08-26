@@ -6,3 +6,8 @@ stages:
     - starter/data_clean/data_clean.py
     outs:
     - starter/data/census_clean.csv
+  data_check:
+    cmd: pytest starter/check_data/ -vv --data_path starter/data/census_clean.csv
+    deps:
+    - starter/data_clean/data_clean.py
+

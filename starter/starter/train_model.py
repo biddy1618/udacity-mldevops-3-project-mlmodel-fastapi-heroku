@@ -6,7 +6,8 @@ from sklearn.model_selection import train_test_split
 
 # Add code to load in the data.
 
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
+# Optional enhancement, use K-fold cross validation instead of a
+# train-test split.
 train, test = train_test_split(data, test_size=0.20)
 
 cat_features = [
