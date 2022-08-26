@@ -48,8 +48,9 @@ Working in a command line environment is recommended for ease of use with git an
 DVC will be used for data versioning and experiment management through pipelines.
 
 * We will version control the raw data and clean dataa.
-* We will create pipelines for different components of the project:
-  * Data cleaning
+* We will create different stages which will form the pipeline of the project:
+  * Data cleaning - `data_clean`
+  * Data checking - `data_check`
   * Model training with parameters
     * This will output metrics and other meta-data
   * Model saving

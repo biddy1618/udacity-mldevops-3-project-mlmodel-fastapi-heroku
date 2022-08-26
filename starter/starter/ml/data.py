@@ -1,3 +1,9 @@
+'''
+Module for processing cleaned data.
+
+Author: Dauren Baitursyn
+Date: 26.08.22
+'''
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
