@@ -1,3 +1,8 @@
 data_clean:
-  data_raw: starter/data/census.csv
-  data_clean: starter/data/census_clean.csv
+  data_raw: src/data/census.csv
+  data_clean: src/data/census_clean.csv
+train_model:
+  split_random_state: 48
+  split_test_size: 0.2
+  train_random_state: 48
+  model_path: src/model/model.joblib

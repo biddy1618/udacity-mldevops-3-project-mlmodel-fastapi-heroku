@@ -1,17 +1,33 @@
 stages:
   data_clean:
     cmd: >-
-      python starter/data_clean/data_clean.py
+      python src/data_clean/data_clean.py
       --data_raw ${data_clean.data_raw}
       --data_clean ${data_clean.data_clean}
     deps:
     - ${data_clean.data_raw}
-    - starter/data_clean/data_clean.py
+    - src/data_clean/data_clean.py
     outs:
     - ${data_clean.data_clean}
   data_check:
-    cmd: pytest starter/check_data/ -vv --data_path ${data_clean.data_clean}
+    cmd: pytest src/check_data/ -vv --data_path ${data_clean.data_clean}
     deps:
     - ${data_clean.data_clean}
-    - starter/data_clean/data_clean.py
-
+    - src/data_clean/data_clean.py
+  train_model:
+    cmd: >-
+      python src/train_model/train_model.py
+      --data_clean ${data_clean.data_clean}
+      --split_random_state ${train_model.split_random_state}
+      --split_test_size ${train_model.split_test_size}
+      --train_random_state ${train_model.train_random_state}
+      --model ${train_model.model_path}
+    deps:
+    - ${data_clean.data_clean}
+    - src/train_model
+    outs:
+    - ${train_model.model_path}
+    params:
+    - train_model.split_random_state
+    - train_model.split_test_size
+    - train_model.train_random_state

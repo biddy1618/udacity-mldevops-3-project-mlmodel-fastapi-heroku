@@ -1,25 +1,46 @@
 schema: '2.0'
 stages:
   data_clean:
-    cmd: python starter/data_clean/data_clean.py --data_raw starter/data/census.csv
-      --data_clean starter/data/census_clean.csv
+    cmd: python src/data_clean/data_clean.py --data_raw src/data/census.csv --data_clean
+      src/data/census_clean.csv
     deps:
-    - path: starter/data/census.csv
+    - path: src/data/census.csv
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
-    - path: starter/data_clean/data_clean.py
-      md5: c82b1f5448bf791588b5626a1b0bf0f4
-      size: 2150
+    - path: src/data_clean/data_clean.py
+      md5: f4e72a425eaa58c8030917cf7c3b940e
+      size: 1886
     outs:
-    - path: starter/data/census_clean.csv
+    - path: src/data/census_clean.csv
       md5: 106111100691ad962e66554cc0e4db3d
       size: 3541549
   data_check:
-    cmd: pytest starter/check_data/ -vv --data_path starter/data/census_clean.csv
+    cmd: pytest src/check_data/ -vv --data_path src/data/census_clean.csv
     deps:
-    - path: starter/data/census_clean.csv
+    - path: src/data/census_clean.csv
       md5: 106111100691ad962e66554cc0e4db3d
       size: 3541549
-    - path: starter/data_clean/data_clean.py
-      md5: c82b1f5448bf791588b5626a1b0bf0f4
-      size: 2150
+    - path: src/data_clean/data_clean.py
+      md5: f4e72a425eaa58c8030917cf7c3b940e
+      size: 1886
+  train_model:
+    cmd: python src/train_model/train_model.py --data_clean src/data/census_clean.csv
+      --split_random_state 48 --split_test_size 0.2 --train_random_state 48 --model
+      src/model/model.joblib
+    deps:
+    - path: src/data/census_clean.csv
+      md5: 106111100691ad962e66554cc0e4db3d
+      size: 3541549
+    - path: src/train_model
+      md5: 13a9cc22072702dbfe1c1c57235f7714.dir
+      size: 15382
+      nfiles: 8
+    params:
+      params.yaml:
+        train_model.split_random_state: 48
+        train_model.split_test_size: 0.2
+        train_model.train_random_state: 48
+    outs:
+    - path: src/model/model.joblib
+      md5: 4d59986be5441d6eff60359840c79efe
+      size: 182115
