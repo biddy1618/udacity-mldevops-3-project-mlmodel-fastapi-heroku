@@ -1,8 +1,15 @@
-data_clean:
-  data_raw: src/data/census.csv
-  data_clean: src/data/census_clean.csv
-train_model:
+clean_data:
+  raw_data: src/data/census.csv
+  clean_data: src/data/census_clean.csv
+split_data:
   split_random_state: 48
   split_test_size: 0.2
-  train_random_state: 48
+  split_train: src/data/train.csv
+  split_test: src/data/test.csv
+train_model:
+  valid_size: 0.2
+  valid_random_state: 48
+  model_random_state: 48
   model_path: src/model/model.joblib
+evaluate_model:
+  metrics_folder: src/metrics

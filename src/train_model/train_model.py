@@ -6,12 +6,11 @@ import argparse
 from pathlib import Path
 from joblib import dump
 
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from ml.data import process_data
-from ml.model import train_model, compute_model_metrics, inference
+from .ml.data import process_data
+from .ml.model import train_model, compute_model_metrics, inference
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,20 +24,17 @@ def go(args):
     '''
     logger.info('Starting training model...')
 
-    PATH_DATA_CLEAN = Path.cwd().joinpath(args.data_clean)
+    PATH_TRAIN_DATA = Path.cwd().joinpath(args.train_data)
     PATH_MODEL = Path.cwd().joinpath(args.model)
 
-    logger.info(f'Loading clean data at {PATH_DATA_CLEAN}')
-    data = pd.read_csv(PATH_DATA_CLEAN)
+    logger.info(f'Loading train data at {PATH_TRAIN_DATA}')
+    data = pd.read_csv(PATH_TRAIN_DATA)
 
-    # Optional enhancement, use K-fold cross validation instead of a
-    # train-test split.
-
-    logger.info(f'Splitting data with test size {args.split_test_size}')
-    train, test = train_test_split(
+    logger.info(f'Splitting data with validation size {args.valid_size}')
+    train, valid = train_test_split(
         data,
-        test_size=args.split_test_size,
-        random_state=args.split_random_state
+        test_size=args.valid_size,
+        random_state=args.valid_random_state
     )
 
     cat_features = [
@@ -52,7 +48,7 @@ def go(args):
         'native-country',
     ]
 
-    logger.info('Processing train data')
+    logger.info('Processing training data')
     X_train, y_train, cat_encoder, target_encoder = process_data(
         train,
         categorical_features=cat_features,
@@ -60,9 +56,9 @@ def go(args):
         training=True
     )
 
-    logger.info('Processing test data')
+    logger.info('Processing validation data')
     X_test, y_test, _, _ = process_data(
-        test,
+        valid,
         categorical_features=cat_features,
         target='salary',
         training=False,
@@ -70,16 +66,16 @@ def go(args):
         target_encoder=target_encoder
     )
 
-    logger.info('Training model on train data')
-    model = train_model(X_train, y_train, args.train_random_state)
+    logger.info('Training model on training data')
+    model = train_model(X_train, y_train, args.model_random_state)
 
-    logger.info('Making inference on test data')
+    logger.info('Making inference on validation data')
     y_pred_proba = inference(model, X_test)
     y_pred = y_pred_proba[:, 1].round()
 
     precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
 
-    logger.info('Metrics on test data:')
+    logger.info('Metrics on validation data:')
     logger.info(f'Precision score: {precision:.3f}')
     logger.info(f'Recall score: {recall:.3f}')
     logger.info(f'F1 score: {fbeta:.3f}')
@@ -103,29 +99,30 @@ if __name__ == '__main__':
         description='Train and save trained model')
 
     parser.add_argument(
-        '--data_clean',
+        '--train_data',
         type=str,
-        help='Path of the data to save after cleaning',
+        help='File path of the training data',
         required=True
     )
 
     parser.add_argument(
-        '--split_random_state',
-        type=int,
-        help='Random seed for train-test split',
-        required=True
-    )
-
-    parser.add_argument(
-        '--split_test_size',
+        '--valid_size',
         type=float,
         default=0.2,
-        help='Test size for train-test split',
+        help='Validation size for training data',
         required=True
     )
 
     parser.add_argument(
-        '--train_random_state',
+        '--valid_random_state',
+        type=int,
+        default=48,
+        help='Random seed for validation',
+        required=True
+    )
+
+    parser.add_argument(
+        '--model_random_state',
         type=int,
         help='Random seed for model',
         required=True
@@ -134,7 +131,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--model',
         type=str,
-        help='Path to save the trained model',
+        help='File path to save the trained model',
         required=True
     )
 

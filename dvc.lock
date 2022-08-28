@@ -8,8 +8,8 @@ stages:
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     - path: src/data_clean/data_clean.py
-      md5: f4e72a425eaa58c8030917cf7c3b940e
-      size: 1886
+      md5: 3472ab37ccfe41dbb56dd72b21126423
+      size: 1896
     outs:
     - path: src/data/census_clean.csv
       md5: 106111100691ad962e66554cc0e4db3d
@@ -21,26 +21,93 @@ stages:
       md5: 106111100691ad962e66554cc0e4db3d
       size: 3541549
     - path: src/data_clean/data_clean.py
-      md5: f4e72a425eaa58c8030917cf7c3b940e
-      size: 1886
+      md5: 3472ab37ccfe41dbb56dd72b21126423
+      size: 1896
   train_model:
-    cmd: python src/train_model/train_model.py --data_clean src/data/census_clean.csv
-      --split_random_state 48 --split_test_size 0.2 --train_random_state 48 --model
-      src/model/model.joblib
+    cmd: python -m src.train_model.train_model --train_data src/data/train.csv --valid_size
+      0.2 --valid_random_state 48 --model_random_state 48 --model src/model/model.joblib
+    deps:
+    - path: src/data/train.csv
+      md5: 4de1734a159fed591e479332c1843e90
+      size: 2833283
+    - path: src/train_model
+      md5: 6a9b50a9ce702ab0d7cdb795e6a25c0c.dir
+      size: 18257
+      nfiles: 10
+    params:
+      params.yaml:
+        train_model.model_random_state: 48
+        train_model.valid_random_state: 48
+        train_model.valid_size: 0.2
+    outs:
+    - path: src/model/model.joblib
+      md5: c202ea16c90d1c755cd29dac0453dc06
+      size: 180800
+  clean_data:
+    cmd: python -m src.clean_data.clean_data --raw_data src/data/census.csv --clean_data
+      src/data/census_clean.csv
+    deps:
+    - path: src/clean_data
+      md5: 365fe69bcf29e82faada7308fd328508.dir
+      size: 6128
+      nfiles: 6
+    - path: src/data/census.csv
+      md5: 145de00f6e6053d3f7044628f9a5b5ff
+      size: 3974474
+    outs:
+    - path: src/data/census_clean.csv
+      md5: 106111100691ad962e66554cc0e4db3d
+      size: 3541549
+  check_data:
+    cmd: pytest src/check_data/ -vv --data_path src/data/census_clean.csv
+    deps:
+    - path: src/check_data
+      md5: 0af4115754df407f42a3c26bee28d103.dir
+      size: 14681
+      nfiles: 6
+    - path: src/data/census_clean.csv
+      md5: 106111100691ad962e66554cc0e4db3d
+      size: 3541549
+  split_data:
+    cmd: python -m src.split_data.split_data --clean_data src/data/census_clean.csv
+      --split_random_state 48 --split_test_size 0.2 --split_train src/data/train.csv
+      --split_test src/data/test.csv
     deps:
     - path: src/data/census_clean.csv
       md5: 106111100691ad962e66554cc0e4db3d
       size: 3541549
-    - path: src/train_model
-      md5: 13a9cc22072702dbfe1c1c57235f7714.dir
-      size: 15382
-      nfiles: 8
-    params:
-      params.yaml:
-        train_model.split_random_state: 48
-        train_model.split_test_size: 0.2
-        train_model.train_random_state: 48
+    - path: src/split_data
+      md5: ecf382df2553d1ed13c61cd2b5aa9665.dir
+      size: 4303
+      nfiles: 4
     outs:
+    - path: src/data/test.csv
+      md5: 8abab522af279ae4a1889e863a3d75e5
+      size: 708421
+    - path: src/data/train.csv
+      md5: 4de1734a159fed591e479332c1843e90
+      size: 2833283
+  evaluate_model:
+    cmd: python -m src.evaluate_model.evaluate_model --model src/model/model.joblib
+      --test_data src/data/test.csv --metrics src/metrics
+    deps:
+    - path: src/data/test.csv
+      md5: 8abab522af279ae4a1889e863a3d75e5
+      size: 708421
+    - path: src/evaluate_model
+      md5: 0e86d4ebb19244988102dde82d542841.dir
+      size: 6069
+      nfiles: 4
     - path: src/model/model.joblib
-      md5: 4d59986be5441d6eff60359840c79efe
-      size: 182115
+      md5: c202ea16c90d1c755cd29dac0453dc06
+      size: 180800
+    outs:
+    - path: src/metrics/metrics.json
+      md5: bce1923457cdb6dfc7fef5b042ebbd83
+      size: 136
+    - path: src/metrics/precision_recall_curve.csv
+      md5: 23010f65d04b0efe8893c8939cea7460
+      size: 195770
+    - path: src/metrics/predictions.csv
+      md5: acb71e8b61c0e1a9b26de4c08a312aca
+      size: 39065

@@ -84,15 +84,14 @@ def get_precision_recall_curve(y, pred_probas):
 
     Returns:
         np.array: Precision values for all threshold values.
-        np.array: Recall values for all threshold values.
         np.array: Threshold values.
         float: Average precision score.
     '''
-    precisions, recalls, thresholds = precision_recall_curve(y, pred_probas)
+    precisions, recalls, _ = precision_recall_curve(y, pred_probas)
 
     aps_score = average_precision_score(y, pred_probas)
 
-    return precisions, recalls, thresholds, aps_score
+    return precisions, recalls, aps_score
 
 
 def inference(model, X):

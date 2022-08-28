@@ -52,7 +52,9 @@ DVC will be used for data versioning and experiment management through pipelines
   * Data cleaning - `data_clean`
   * Data checking - `data_check`
   * Model training with parameters
-    * This will output metrics and other meta-data
+    * Basic pipeline is ready
+    * Save plots and metrics using DVC
+    * Implement pipeline model rather than pure model
   * Model saving
   * Performance testing with data slices
   * Unit testing
