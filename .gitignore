@@ -167,3 +167,6 @@ catboost_info/
 
 # DVC plots
 dvc_plots/
+
+# GDrive credentials
+.gdrive/
