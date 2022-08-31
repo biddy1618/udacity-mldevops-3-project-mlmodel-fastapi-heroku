@@ -19,6 +19,60 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
+def _compute_model_metrics_slice(model, data):
+    '''
+    Compute the trained machine learning model metrics on 
+    data slices using precision, recall, and F1.
+
+    Args:
+        model (dict):
+            Dictionary with classifier, categorical features, 
+            categorical encoder and target encoder.
+        data (pd.DataFrame):
+            Dataframe containing the features and label.
+    '''
+
+    '''
+    relationship
+    race
+    sex
+    '''
+    slice_metrics = {}
+    slice_cols = ['relationship', 'race', 'sex']
+
+    for col in slice_cols:
+        slice_metrics[col] = {}
+        for value in data[col].unique():
+            slice_data = data[data[col] == value]
+
+            X_test, y_test, _, _ = process_data(
+                slice_data,
+                categorical_features=model['cat_features'],
+                target='salary',
+                training=False,
+                cat_encoder=model['cat_encoder'],
+                target_encoder=model['target_encoder']
+            )
+
+            y_pred_proba = inference(model['classifier'], X_test)
+            y_pred = y_pred_proba[:, 1].round()
+
+            precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
+
+            _, _, aps_score = get_precision_recall_curve(
+                y_test, y_pred_proba[:, 1])
+
+            slice_metrics[col][value] = {
+                'Precision': precision,
+                'Recall': recall,
+                'F1 score': fbeta,
+                'Average precision': aps_score,
+                'Number of observations': slice_data.shape[0]
+            }
+
+    return slice_metrics
+
+
 def go(args):
     '''
     Main function for evaluating model.
@@ -67,11 +121,15 @@ def go(args):
         Path(PATH_METRICS_FOLDER).joinpath('precision_recall_curve.csv'),
         index=False)
 
+    logger.info('Making inference on slices of test data')
+    model_slice_metrics = _compute_model_metrics_slice(model, data)
+
     model_metrics = {
         'Precision': precision,
         'Recall': recall,
         'F1 score': fbeta,
-        'Average precision': aps_score
+        'Average precision': aps_score,
+        'Slice metrics': model_slice_metrics
     }
     with open(Path(PATH_METRICS_FOLDER).joinpath('metrics.json'), 'w') \
             as jsonfile:

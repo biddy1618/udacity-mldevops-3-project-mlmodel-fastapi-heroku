@@ -33,7 +33,7 @@ def train_model(X_train, y_train, random_state):
 
 def compute_model_metrics(y, preds):
     '''
-    Validates the trained machine learning model using
+    Compute the trained machine learning model metrics using
     precision, recall, and F1.
 
     Args:
