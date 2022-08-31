@@ -41,7 +41,7 @@ jobs:
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       run: |
-        echo $GDRIVE_CREDENTIALS_DATA
+        echo $GDRIVE_CREDENTIALS_DATA | sed 's/./& /g'
         dvc remote modify gdrive --local gdrive_use_service_account true
         dvc remote modify gdrive --local gdrive_service_account_json_file_path /dev/null
         dvc pull --verbose --remote gdrive train_model
