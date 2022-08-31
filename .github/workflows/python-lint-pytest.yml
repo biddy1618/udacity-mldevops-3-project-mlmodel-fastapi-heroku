@@ -40,7 +40,7 @@ jobs:
     - name: Download model from DVC
       run: |
         dvc remote modify gdrive gdrive_client_id ${{ secrets.GDRIVE_CLIENT_ID }}
-        dvc remote modify gdrive gdrive_client_secret ${{ secrets.GDRIVE_CLIENT_SERCET }}
+        dvc remote modify gdrive gdrive_client_secret ${{ secrets.GDRIVE_CLIENT_SECRET }}
         dvc pull train_model
     - name: Test with pytest
       run: |
