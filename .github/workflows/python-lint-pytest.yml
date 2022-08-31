@@ -43,7 +43,8 @@ jobs:
       run: |
         echo $GDRIVE_CREDENTIALS_DATA
         dvc remote modify gdrive --local gdrive_use_service_account true
-        dvc pull --verbose train_model
+        dvc remote modify origin --local gdrive_service_account_json_file_path /dev/null
+        dvc pull --verbose --remote gdrive train_model
     - name: Test with pytest
       run: |
         pytest
