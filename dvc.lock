@@ -95,16 +95,16 @@ stages:
       md5: 8abab522af279ae4a1889e863a3d75e5
       size: 708421
     - path: src/evaluate_model
-      md5: 60f5938b8df1553cdf64e8f10d4b6f6a.dir
-      size: 8947
+      md5: 7c8e4aa3f16ac82b05e639638e008db0.dir
+      size: 9124
       nfiles: 4
     - path: src/model/model.joblib
       md5: c202ea16c90d1c755cd29dac0453dc06
       size: 180800
     outs:
     - path: src/metrics/metrics.json
-      md5: af392e4367ad16f791e671a76409e8ef
-      size: 2400
+      md5: fad1f7951193d6189c0b7da250c15fa1
+      size: 3596
     - path: src/metrics/precision_recall_curve.csv
       md5: 23010f65d04b0efe8893c8939cea7460
       size: 195770

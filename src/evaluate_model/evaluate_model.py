@@ -63,11 +63,13 @@ def _compute_model_metrics_slice(model, data):
                 y_test, y_pred_proba[:, 1])
 
             slice_metrics[col][value] = {
-                'Precision': precision,
-                'Recall': recall,
-                'F1 score': fbeta,
-                'Average precision': aps_score,
-                'Number of observations': slice_data.shape[0]
+                'Precision': {'Precision': precision},
+                'Recall': {'Recall': recall},
+                'F1 score': {'F1 score': fbeta},
+                'Average precision': {'Average precision': aps_score},
+                'Number of observations': {
+                    'Number of observations': slice_data.shape[0]
+                }
             }
 
     return slice_metrics
