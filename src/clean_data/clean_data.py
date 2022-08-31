@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .helper import trim, mark_question_row
+from .helper import trim_replace, mark_question_row
 
 logging.basicConfig(
     level=logging.INFO,
@@ -32,8 +32,8 @@ def go(args):
     df = pd.read_csv(PATH_RAW_DATA)
 
     logger.info(f'Trailing and leading spaces: {df.columns.tolist()[:5]} ...')
-    df = trim(df)
-    logger.info(f'Removing spaces: {df.columns.tolist()[:5]} ...')
+    df = trim_replace(df)
+    logger.info(f'Removing spaces and hyphens: {df.columns.tolist()[:5]} ...')
 
     logger.info(
         ('Number of rows containing `?`: '

@@ -20,16 +20,16 @@ def test_column_names(data: pd.DataFrame, prod: bool):
         'workclass',
         'fnlgt',
         'education',
-        'education-num',
-        'marital-status',
+        'education_num',
+        'marital_status',
         'occupation',
         'relationship',
         'race',
         'sex',
-        'capital-gain',
-        'capital-loss',
-        'hours-per-week',
-        'native-country',
+        'capital_gain',
+        'capital_loss',
+        'hours_per_week',
+        'native_country',
     ]
 
     if prod:
@@ -159,11 +159,11 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
     errors = []
     workclass_data = set(data['workclass'].unique())
     education_data = set(data['education'].unique())
-    marital_status_data = set(data['marital-status'].unique())
+    marital_status_data = set(data['marital_status'].unique())
     occupation_data = set(data['occupation'].unique())
     relationship_data = set(data['relationship'].unique())
     sex_data = set(data['sex'].unique())
-    native_country_data = set(data['native-country'].unique())
+    native_country_data = set(data['native_country'].unique())
 
     if prod:
         salary = set(['<=50K', '>50K'])
@@ -179,7 +179,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
              f'{education_data.difference(education)}.'))
     if not marital_status_data.issubset(marital_status):
         errors.append(
-            ('`marital-status` contains unknown values - '
+            ('`marital_status` contains unknown values - '
              f'{marital_status_data.difference(marital_status)}.'))
     if not occupation_data.issubset(occupation):
         errors.append(
@@ -194,7 +194,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
             f'`sex` contains unknown values - {sex_data.difference(sex)}.')
     if not native_country_data.issubset(native_country):
         errors.append(
-            ('`native-country` contains unknown values - '
+            ('`native_country` contains unknown values - '
              f'{native_country_data.difference(native_country)}.'))
     if prod and not salary_data.issubset(salary):
         errors.append(
@@ -209,18 +209,18 @@ def test_proper_boundaries(data: pd.DataFrame):
     Test numeric columns boundaries.
     '''
     age = data['age'].between(17, 90)
-    capital_gain = data['capital-gain'].between(0, 99999)
-    capital_loss = data['capital-loss'].between(0, 99999)
-    hours_per_week = data['hours-per-week'].between(1, 99)
+    capital_gain = data['capital_gain'].between(0, 99999)
+    capital_loss = data['capital_loss'].between(0, 99999)
+    hours_per_week = data['hours_per_week'].between(1, 99)
 
     errors = []
     if not np.sum(~age) == 0:
         errors.append('`age` contains out of range values.')
     if not np.sum(~capital_gain) == 0:
-        errors.append('`capital-gain` contains out of range values.')
+        errors.append('`capital_gain` contains out of range values.')
     if not np.sum(~capital_loss) == 0:
-        errors.append('`capital-loss` contains out of range values.')
+        errors.append('`capital_loss` contains out of range values.')
     if not np.sum(~hours_per_week) == 0:
-        errors.append('`hours-per-week` contains out of range values.')
+        errors.append('`hours_per_week` contains out of range values.')
 
     assert not errors, "errors occured:\n{}".format("\n".join(errors))

@@ -48,25 +48,25 @@ stages:
       src/data/census_clean.csv
     deps:
     - path: src/clean_data
-      md5: 365fe69bcf29e82faada7308fd328508.dir
-      size: 6128
+      md5: bde9080c93d2deb1b6ee7d0b940e580e.dir
+      size: 6513
       nfiles: 6
     - path: src/data/census.csv
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     outs:
     - path: src/data/census_clean.csv
-      md5: 106111100691ad962e66554cc0e4db3d
+      md5: 38efc907adc42e60a4b0ed7bddc4a1b2
       size: 3541549
   check_data:
     cmd: pytest src/check_data/ -vv --data_path src/data/census_clean.csv
     deps:
     - path: src/check_data
-      md5: 25c9c664cbecaee6ab3135ab7221c19d.dir
-      size: 14677
+      md5: dbe95bfc1f3bb05a950a5cf84545c2e4.dir
+      size: 14626
       nfiles: 6
     - path: src/data/census_clean.csv
-      md5: 106111100691ad962e66554cc0e4db3d
+      md5: 38efc907adc42e60a4b0ed7bddc4a1b2
       size: 3541549
   split_data:
     cmd: python -m src.split_data.split_data --clean_data src/data/census_clean.csv
@@ -74,7 +74,7 @@ stages:
       --split_test src/data/test.csv
     deps:
     - path: src/data/census_clean.csv
-      md5: 106111100691ad962e66554cc0e4db3d
+      md5: 38efc907adc42e60a4b0ed7bddc4a1b2
       size: 3541549
     - path: src/split_data
       md5: ecf382df2553d1ed13c61cd2b5aa9665.dir
@@ -82,10 +82,10 @@ stages:
       nfiles: 4
     outs:
     - path: src/data/test.csv
-      md5: 8abab522af279ae4a1889e863a3d75e5
+      md5: c9db0e484807efe9b1991f49857f4313
       size: 708421
     - path: src/data/train.csv
-      md5: 4de1734a159fed591e479332c1843e90
+      md5: 57aa5d76f0ce31d5ad4089ac18d1f3b4
       size: 2833283
   evaluate_model:
     cmd: python -m src.evaluate_model.evaluate_model --model src/model/model.joblib

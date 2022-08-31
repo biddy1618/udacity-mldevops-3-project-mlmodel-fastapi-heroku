@@ -54,7 +54,6 @@ Stages:
 * Model training with parameters - `train_model`
     * Implement pipeline model rather than pure model - to do
 * Model evaluation - `evaluate_model`
-    * Performance testing with data slices - to do
 ### API creation
 
 Create

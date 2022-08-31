@@ -3,9 +3,10 @@ Module for helper functions for cleaning data
 '''
 
 
-def trim(dataset):
+def trim_replace(dataset):
     '''
-    Clean dataset by removing leading and trailing whitespace.
+    Clean dataset by removing leading and trailing whitespace
+    and replacing hypens with underscores in columns.
 
     Args:
         dataset (pd.DataFrame): Input data.
@@ -14,6 +15,7 @@ def trim(dataset):
         pd.DataFrame: Data without trailing and leading whitespace.
     '''
     dataset.columns = [col.strip() for col in dataset.columns]
+    dataset.columns = [col.replace('-', '_') for col in dataset.columns]
     return dataset.applymap(
         lambda value: value.strip() if isinstance(value, str) else value)
 

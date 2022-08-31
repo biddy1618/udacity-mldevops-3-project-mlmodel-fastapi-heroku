@@ -31,12 +31,6 @@ def _compute_model_metrics_slice(model, data):
         data (pd.DataFrame):
             Dataframe containing the features and label.
     '''
-
-    '''
-    relationship
-    race
-    sex
-    '''
     slice_metrics = {}
     slice_cols = ['relationship', 'race', 'sex']
 

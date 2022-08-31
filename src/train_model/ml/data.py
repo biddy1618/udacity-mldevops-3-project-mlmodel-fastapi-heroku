@@ -68,7 +68,7 @@ def process_data(
     X_continuous = X.drop(*[categorical_features], axis=1)
 
     if training is True:
-        cat_encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
+        cat_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
         target_encoder = LabelBinarizer()
         X_categorical = cat_encoder.fit_transform(X_categorical)
         y = target_encoder.fit_transform(y.values).ravel()
