@@ -44,8 +44,9 @@ model = load(PATH_MODEL)
 # This allows sending of data (our TaggedItem) via POST to the API.
 @app.post("/persons/")
 async def create_item(person: Person):
-    print(person)
+
     person = pd.DataFrame(jsonable_encoder([person]))
+
     x, _, _, _ = process_data(
         person,
         categorical_features=model['cat_features'],
@@ -56,4 +57,4 @@ async def create_item(person: Person):
     pred_proba = inference(model['classifier'], x)
     pred = pred_proba[:, 1].round()
 
-    return pred
+    return pred[0]
