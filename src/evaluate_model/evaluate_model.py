@@ -21,12 +21,12 @@ logger = logging.getLogger()
 
 def _compute_model_metrics_slice(model, data):
     '''
-    Compute the trained machine learning model metrics on 
+    Compute the trained machine learning model metrics on
     data slices using precision, recall, and F1.
 
     Args:
         model (dict):
-            Dictionary with classifier, categorical features, 
+            Dictionary with classifier, categorical features,
             categorical encoder and target encoder.
         data (pd.DataFrame):
             Dataframe containing the features and label.

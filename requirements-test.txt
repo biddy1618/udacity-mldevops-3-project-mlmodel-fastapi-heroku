@@ -1,0 +1,15 @@
+attrs==22.1.0
+flake8==5.0.4
+iniconfig==1.1.1
+mccabe==0.7.0
+packaging==21.3
+pip==22.2.2
+pluggy==1.0.0
+py==1.11.0
+pycodestyle==2.9.1
+pyflakes==2.5.0
+pyparsing==3.0.9
+pytest==7.1.2
+setuptools==65.3.0
+tomli==2.0.1
+wheel==0.37.1
