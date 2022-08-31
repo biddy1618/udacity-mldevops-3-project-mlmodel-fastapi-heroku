@@ -38,6 +38,8 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 79 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=79 --statistics
     - name: Download model from DVC
+      env:
+        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       run: |
         dvc remote modify gdrive gdrive_client_id ${{ secrets.GDRIVE_CLIENT_ID }}
         dvc remote modify gdrive gdrive_client_secret ${{ secrets.GDRIVE_CLIENT_SECRET }}
