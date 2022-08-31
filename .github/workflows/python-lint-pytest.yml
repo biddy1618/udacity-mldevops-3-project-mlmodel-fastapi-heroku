@@ -41,8 +41,7 @@ jobs:
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       run: |
-        dvc remote modify gdrive gdrive_client_id ${{ secrets.GDRIVE_CLIENT_ID }}
-        dvc remote modify gdrive gdrive_client_secret ${{ secrets.GDRIVE_CLIENT_SECRET }}
+        dvc remote modify gdrive gdrive_use_service_account true
         dvc pull train_model
     - name: Test with pytest
       run: |
