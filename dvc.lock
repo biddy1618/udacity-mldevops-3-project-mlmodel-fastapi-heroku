@@ -28,11 +28,11 @@ stages:
       0.2 --valid_random_state 48 --model_random_state 48 --model src/model/model.joblib
     deps:
     - path: src/data/train.csv
-      md5: 4de1734a159fed591e479332c1843e90
+      md5: 57aa5d76f0ce31d5ad4089ac18d1f3b4
       size: 2833283
     - path: src/train_model
-      md5: ec9ba786a0b6ebccd17fdb8271a60990.dir
-      size: 18269
+      md5: c10d372b73f8a03eef5bb9d4867fe1f8.dir
+      size: 18271
       nfiles: 10
     params:
       params.yaml:
@@ -41,7 +41,7 @@ stages:
         train_model.valid_size: 0.2
     outs:
     - path: src/model/model.joblib
-      md5: c202ea16c90d1c755cd29dac0453dc06
+      md5: 090c2104e9e20a6f9696e7c0275e993f
       size: 180800
   clean_data:
     cmd: python -m src.clean_data.clean_data --raw_data src/data/census.csv --clean_data
@@ -92,14 +92,14 @@ stages:
       --test_data src/data/test.csv --metrics src/metrics
     deps:
     - path: src/data/test.csv
-      md5: 8abab522af279ae4a1889e863a3d75e5
+      md5: c9db0e484807efe9b1991f49857f4313
       size: 708421
     - path: src/evaluate_model
-      md5: 99632b86105c55b65a6e10d6a31abf6d.dir
-      size: 8947
+      md5: b8282bb081689742360e8d29988f0b97.dir
+      size: 8892
       nfiles: 4
     - path: src/model/model.joblib
-      md5: c202ea16c90d1c755cd29dac0453dc06
+      md5: 090c2104e9e20a6f9696e7c0275e993f
       size: 180800
     outs:
     - path: src/metrics/metrics.json
