@@ -33,8 +33,7 @@ jobs:
       run: |
         dvc remote modify gdrive --local gdrive_use_service_account true
         dvc remote modify gdrive --local gdrive_service_account_json_file_path /dev/null
-        dvc pull --verbose --remote gdrive train_model
-        ls ./src/model
+        dvc pull --remote gdrive train_model
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip==22.2.2
