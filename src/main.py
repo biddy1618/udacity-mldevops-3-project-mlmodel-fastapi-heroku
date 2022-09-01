@@ -10,41 +10,48 @@ from pathlib import Path
 from joblib import load
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
-
+from typing import Optional
 from .train_model.ml.model import inference
 from .train_model.ml.data import process_data
 
-logger = logging.getLogger()
 PATH_MODEL = Path.cwd().joinpath('src/model/model.joblib')
 
 
 class Person(BaseModel):
-    age: int
-    workclass: str
-    fnlgt: int
-    education: str
-    education_num: int
-    marital_status: str
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int
-    capital_loss: int
-    hours_per_week: int
-    native_country: str
+    age: Optional[int] = 35
+    workclass: Optional[str] = None
+    fnlgt: Optional[int] = 0
+    education: Optional[str] = None
+    education_num: Optional[int] = 0
+    marital_status: Optional[str] = None
+    occupation: Optional[str] = None
+    relationship: Optional[str] = None
+    race: Optional[str] = None
+    sex: Optional[str] = None
+    capital_gain: Optional[int] = 0
+    capital_loss: Optional[int] = 0
+    hours_per_week: Optional[int] = 0
+    native_country: Optional[str] = None
 
 
+logger = logging.getLogger("uvicorn")
 app = FastAPI()
 
 logger.info(f'Loading model at {PATH_MODEL}')
 model = load(PATH_MODEL)
 
 
-# This allows sending of data (our TaggedItem) via POST to the API.
-@app.post("/persons/")
-async def create_item(person: Person):
+@app.get("/")
+async def get_info() -> dict:
 
+    return {'info':
+            'To test, please, send `POST` request with data on the person...'}
+
+
+@app.post("/persons/")
+async def create_item(person: Person) -> dict:
+
+    logger.info('Making prediction')
     person = pd.DataFrame(jsonable_encoder([person]))
 
     x, _, _, _ = process_data(
@@ -57,4 +64,5 @@ async def create_item(person: Person):
     pred_proba = inference(model['classifier'], x)
     pred = pred_proba[:, 1].round()
 
-    return pred[0]
+    logger.info(f'Predicted - {pred[0]}')
+    return {'Prediction': pred[0]}
