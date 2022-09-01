@@ -41,10 +41,12 @@ jobs:
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       run: |
-        echo $GDRIVE_CREDENTIALS_DATA | sed 's/./& /g'
+        # echo $GDRIVE_CREDENTIALS_DATA | sed 's/./& /g'
+        find .
         dvc remote modify gdrive --local gdrive_use_service_account true
         dvc remote modify gdrive --local gdrive_service_account_json_file_path /dev/null
         dvc pull --verbose --remote gdrive train_model
+        find .
     - name: Test with pytest
       run: |
         pytest
