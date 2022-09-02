@@ -1,5 +1,8 @@
 '''
 Module for building model.
+
+Author: Dauren Baitursyn
+Date: 26.08.22
 '''
 import logging
 import argparse

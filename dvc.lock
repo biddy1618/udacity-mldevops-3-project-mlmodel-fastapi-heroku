@@ -5,8 +5,8 @@ stages:
       src/data/census_clean.csv
     deps:
     - path: src/clean_data
-      md5: bde9080c93d2deb1b6ee7d0b940e580e.dir
-      size: 6513
+      md5: 5d55d7963cd210f9deb3709938d518f0.dir
+      size: 6597
       nfiles: 6
     - path: src/data/census.csv
       md5: 145de00f6e6053d3f7044628f9a5b5ff
@@ -24,8 +24,8 @@ stages:
       md5: 38efc907adc42e60a4b0ed7bddc4a1b2
       size: 3541549
     - path: src/split_data
-      md5: ecf382df2553d1ed13c61cd2b5aa9665.dir
-      size: 4303
+      md5: 8ca5f49518dce1c866b2206c5a1b6a19.dir
+      size: 4385
       nfiles: 4
     outs:
     - path: src/data/test.csv
@@ -42,8 +42,8 @@ stages:
       md5: 57aa5d76f0ce31d5ad4089ac18d1f3b4
       size: 2833283
     - path: src/train_model
-      md5: c10d372b73f8a03eef5bb9d4867fe1f8.dir
-      size: 18271
+      md5: e021c3212a2515a4363d90dba6bfcf46.dir
+      size: 18353
       nfiles: 10
     params:
       params.yaml:
@@ -72,8 +72,8 @@ stages:
       md5: c9db0e484807efe9b1991f49857f4313
       size: 708421
     - path: src/evaluate_model
-      md5: b8282bb081689742360e8d29988f0b97.dir
-      size: 8892
+      md5: fddb601bc6f2b73ae9fbb29ddd34f3c0.dir
+      size: 8974
       nfiles: 4
     - path: src/model/model.joblib
       md5: 090c2104e9e20a6f9696e7c0275e993f

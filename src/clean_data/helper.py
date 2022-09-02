@@ -1,5 +1,8 @@
 '''
-Module for helper functions for cleaning data
+Module for helper functions for cleaning data.
+
+Author: Dauren Baitursyn
+Date: 26.08.22
 '''
 
 

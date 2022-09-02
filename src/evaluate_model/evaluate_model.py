@@ -1,5 +1,8 @@
 '''
 Module for evaluating model on test data.
+
+Author: Dauren Baitursyn
+Date: 26.08.22
 '''
 import logging
 import argparse

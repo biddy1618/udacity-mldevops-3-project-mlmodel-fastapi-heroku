@@ -1,5 +1,8 @@
 '''
 Module for splitting data to training and test sets.
+
+Author: Dauren Baitursyn
+Date: 26.08.22
 '''
 import logging
 import argparse

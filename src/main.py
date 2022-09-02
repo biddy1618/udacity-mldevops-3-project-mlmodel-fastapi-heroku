@@ -1,56 +1,73 @@
 '''
+Module for starting FastAPI microframework.
 
+Author: Dauren Baitursyn
+Date: 02.09.22
 '''
 import logging
+import yaml
 
 import pandas as pd
 
-from pydantic import BaseModel
 from pathlib import Path
 from joblib import load
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
-from typing import Optional
 from .train_model.ml.model import inference
 from .train_model.ml.data import process_data
-
-PATH_MODEL = Path.cwd().joinpath('src/model/model.joblib')
-
-
-class Person(BaseModel):
-    age: Optional[int] = 35
-    workclass: Optional[str] = None
-    fnlgt: Optional[int] = 0
-    education: Optional[str] = None
-    education_num: Optional[int] = 0
-    marital_status: Optional[str] = None
-    occupation: Optional[str] = None
-    relationship: Optional[str] = None
-    race: Optional[str] = None
-    sex: Optional[str] = None
-    capital_gain: Optional[int] = 0
-    capital_loss: Optional[int] = 0
-    hours_per_week: Optional[int] = 0
-    native_country: Optional[str] = None
+from .api_models.models import Person, GenericResponse, Prediction
 
 
 logger = logging.getLogger("uvicorn")
+try:
+    with open(Path.cwd().joinpath('params.yaml'), 'rb') as f:
+        params = yaml.safe_load(f)
+    model_path = params['train_model']['model_path']
+except FileNotFoundError as e:
+    logger.error('`params.yaml` file not found.')
+    raise e
+except ValueError as e:
+    logger.error(
+        '`params.yaml` has no key `train_model.model_path` for model path')
+    raise e
+
 app = FastAPI()
 
-logger.info(f'Loading model at {PATH_MODEL}')
-model = load(PATH_MODEL)
+logger.info(f'Loading model at `{model_path}`')
+try:
+    model = load(Path.cwd().joinpath(model_path))
+except Exception as e:
+    logger.error(
+        f'Failed to load joblib file at `{model_path}`')
+    raise e
 
 
-@app.get("/")
-async def get_info() -> dict:
+@app.get("/", response_model=GenericResponse)
+async def get_info():
+    '''
+    Path for retrieving greeting.
 
-    return {'info':
-            'To test, please, send `POST` request with data on the person...'}
+    Returns:
+        dict: GenericResponse pydantic model.
+    '''
+    return {
+        'message': (
+            'To test, please, send `POST` request with data on the person '
+            'to `/persons/` to get prediction on the salary.')
+        }
 
 
-@app.post("/persons/")
+@app.post("/persons/", response_model=Prediction)
 async def create_item(person: Person) -> dict:
+    '''
+    Path for predicting if person earns more than 50k or less.
 
+    Args:
+        person (Person): Person pydantic model.
+
+    Returns:
+        dict: Prediction pydantic model.
+    '''
     logger.info('Making prediction')
     person = pd.DataFrame(jsonable_encoder([person]))
 
@@ -64,5 +81,7 @@ async def create_item(person: Person) -> dict:
     pred_proba = inference(model['classifier'], x)
     pred = pred_proba[:, 1].round()
 
-    logger.info(f'Predicted - {pred[0]}')
-    return {'Prediction': pred[0]}
+    pred_label = model['target_encoder'].inverse_transform(pred)
+
+    logger.info(f'Predicted - {pred_label[0]}')
+    return {'prediction': pred_label[0]}
