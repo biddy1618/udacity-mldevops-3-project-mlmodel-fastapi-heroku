@@ -40,32 +40,16 @@ def go(args):
         random_state=args.valid_random_state
     )
 
-    cat_features = [
-        'workclass',
-        'education',
-        'marital_status',
-        'occupation',
-        'relationship',
-        'race',
-        'sex',
-        'native_country',
-    ]
-
-    logger.info('Processing training data')
-    X_train, y_train, cat_encoder, target_encoder = process_data(
+    X_train, y_train, preprocessor, target_encoder = process_data(
         train,
-        categorical_features=cat_features,
-        target='salary',
         training=True
     )
 
     logger.info('Processing validation data')
     X_test, y_test, _, _ = process_data(
         valid,
-        categorical_features=cat_features,
-        target='salary',
         training=False,
-        cat_encoder=cat_encoder,
+        preprocessor=preprocessor,
         target_encoder=target_encoder
     )
 
@@ -84,8 +68,7 @@ def go(args):
     logger.info(f'F1 score: {fbeta:.3f}')
 
     model = {
-        'cat_features': cat_features,
-        'cat_encoder': cat_encoder,
+        'preprocessor': preprocessor,
         'target_encoder': target_encoder,
         'classifier': model
     }

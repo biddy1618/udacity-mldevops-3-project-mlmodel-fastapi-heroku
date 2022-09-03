@@ -7,6 +7,8 @@ Date: 26.08.22
 
 import pandas as pd
 import numpy as np
+
+from .. import constants
 # import scipy.stats
 
 
@@ -15,25 +17,10 @@ def test_column_names(data: pd.DataFrame, prod: bool):
     Test columns correspondence and order.
     '''
 
-    expected_colums = [
-        'age',
-        'workclass',
-        'fnlgt',
-        'education',
-        'education_num',
-        'marital_status',
-        'occupation',
-        'relationship',
-        'race',
-        'sex',
-        'capital_gain',
-        'capital_loss',
-        'hours_per_week',
-        'native_country',
-    ]
+    expected_colums = constants.ind_fields
 
     if prod:
-        expected_colums += ['salary']
+        expected_colums += [constants.target_field]
 
     these_columns = data.columns.values
 
@@ -43,118 +30,17 @@ def test_column_names(data: pd.DataFrame, prod: bool):
 
 def test_cat_columns_values(data: pd.DataFrame, prod: bool):
     '''
-    Test column values for invalid values.
+    Test data for invalid values.
     '''
-    workclass = set(['State-gov',
-                     'Self-emp-not-inc',
-                     'Private',
-                     'Federal-gov',
-                     'Local-gov',
-                     'Unknown',
-                     'Self-emp-inc',
-                     'Without-pay',
-                     'Never-worked'
-                     ])
 
-    education = set(['Bachelors',
-                     'HS-grad',
-                     '11th',
-                     'Masters',
-                     '9th',
-                     'Some-college',
-                     'Assoc-acdm',
-                     'Assoc-voc',
-                     '7th-8th',
-                     'Doctorate',
-                     'Prof-school',
-                     '5th-6th',
-                     '10th',
-                     '1st-4th',
-                     'Preschool',
-                     '12th'
-                     ])
-
-    marital_status = set(['Never-married',
-                          'Married-civ-spouse',
-                          'Divorced',
-                          'Married-spouse-absent',
-                          'Separated',
-                          'Married-AF-spouse',
-                          'Widowed'
-                          ])
-
-    occupation = set(['Adm-clerical',
-                      'Exec-managerial',
-                      'Handlers-cleaners',
-                      'Prof-specialty',
-                      'Other-service',
-                      'Sales',
-                      'Craft-repair',
-                      'Transport-moving',
-                      'Farming-fishing',
-                      'Machine-op-inspct',
-                      'Tech-support',
-                      'Unknown',
-                      'Protective-serv',
-                      'Armed-Forces',
-                      'Priv-house-serv'
-                      ])
-
-    relationship = set(['Not-in-family',
-                        'Husband',
-                        'Wife',
-                        'Own-child',
-                        'Unmarried',
-                        'Other-relative'
-                        ])
-
-    sex = set(['Male', 'Female'])
-
-    native_country = set(['United-States',
-                          'Cuba',
-                          'Jamaica',
-                          'India',
-                          'Unknown',
-                          'Mexico',
-                          'South',
-                          'Puerto-Rico',
-                          'Honduras',
-                          'England',
-                          'Canada',
-                          'Germany',
-                          'Iran',
-                          'Philippines',
-                          'Italy',
-                          'Poland',
-                          'Columbia',
-                          'Cambodia',
-                          'Thailand',
-                          'Ecuador',
-                          'Laos',
-                          'Taiwan',
-                          'Haiti',
-                          'Portugal',
-                          'Dominican-Republic',
-                          'El-Salvador',
-                          'France',
-                          'Guatemala',
-                          'China',
-                          'Japan',
-                          'Yugoslavia',
-                          'Peru',
-                          'Outlying-US(Guam-USVI-etc)',
-                          'Scotland',
-                          'Trinadad&Tobago',
-                          'Greece',
-                          'Nicaragua',
-                          'Vietnam',
-                          'Hong',
-                          'Ireland',
-                          'Hungary',
-                          'Holand-Netherlands'
-                          ])
-
-    salary = set(['<=50K', '>50K'])
+    workclass = constants.workclass
+    education = constants.education
+    marital_status = constants.marital_status
+    occupation = constants.occupation
+    relationship = constants.relationship
+    sex = constants.sex
+    native_country = constants.native_country
+    salary = constants.salary
 
     errors = []
     workclass_data = set(data['workclass'].unique())
@@ -166,7 +52,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
     native_country_data = set(data['native_country'].unique())
 
     if prod:
-        salary = set(['<=50K', '>50K'])
+        salary = constants.salary
         salary_data = set(data['salary'].unique())
 
     if not workclass_data.issubset(workclass):
@@ -206,7 +92,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
 
 def test_proper_boundaries(data: pd.DataFrame):
     '''
-    Test numeric columns boundaries.
+    Test numeric field boundaries.
     '''
     age = data['age'].between(17, 90)
     capital_gain = data['capital_gain'].between(0, 99999)

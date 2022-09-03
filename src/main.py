@@ -72,10 +72,9 @@ async def create_item(person: Person) -> dict:
     person = pd.DataFrame(jsonable_encoder([person]))
 
     x, _, _, _ = process_data(
-        person,
-        categorical_features=model['cat_features'],
+        data=person,
         training=False,
-        cat_encoder=model['cat_encoder']
+        preprocessor=model['preprocessor']
     )
 
     pred_proba = inference(model['classifier'], x)

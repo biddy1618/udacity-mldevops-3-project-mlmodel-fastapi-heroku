@@ -6,14 +6,16 @@ Date: 26.08.22
 '''
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+
+from ... import constants
 
 
 def process_data(
-        X,
-        categorical_features=[],
-        target=None,
+        data,
         training=True,
-        cat_encoder=None,
+        preprocessor=None,
         target_encoder=None):
     '''
     Process the data used in the machine learning pipeline.
@@ -26,20 +28,13 @@ def process_data(
     functionality that scales the continuous data.
 
     Args
-        X (pd.DataFrame):
-            Dataframe containing the features and label. Columns in
-            `categorical_features`.
-        categorical_features (list[str]):
-            List containing the names of the categorical features.
-            Defaults to empty list.
-        target (str):
-            Name of the label column in `X`. If None, then an empty array
-            will be returned for y. Defaults to None.
+        data (pd.DataFrame):
+            Dataframe containing the features and label.
         training (bool):
             Indicator if training mode or inference/validation mode.
             Defaults to True.
-        cat_encoder (sklearn.preprocessing.OneHotEncoder):
-            Trained sklearn OneHotEncoder, only used if training=False.
+        preprocessor (sklearn.compose.ColumnTransformer):
+            Trained sklearn ColumnTransformer, only used if training=False.
             Defaults to None.
         target_encoder (sklearn.preprocessing.LabelBinarizer):
             Trained sklearn LabelBinarizer, only used if training=False.
@@ -49,36 +44,49 @@ def process_data(
         np.array:
             Processed data.
         np.array:
-            Processed labels if labeled=True, otherwise empty np.array.
-        sklearn.preprocessing.OneHotEncoder:
-            Trained OneHotEncoder if training is True, otherwise returns the
-            encoder passed in.
+            Processed labels if training=True or testing case,
+            otherwise empty np.array.
+        sklearn.compose.ColumnTransformer:
+            Trained ColumnTransformer if training is True, otherwise
+            returns the encoder passed in.
         sklearn.preprocessing.LabelBinarizer:
-            Trained LabelBinarizer if training is True, otherwise returns the
-            binarizer passed in.
+            Trained LabelBinarizer if training is True, otherwise
+            returns the binarizer passed in.
     '''
 
-    if target is not None:
-        y = X[target]
-        X = X.drop([target], axis=1)
-    else:
-        y = np.array([])
+    X = data[constants.ind_fields]
+    y = np.array([])
+    if training:
+        categorical = constants.cat_fields
+        categorical_preproc = OneHotEncoder(
+            sparse=False, handle_unknown='ignore')
 
-    X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+        zero_imputed = constants.zero_imputed
+        zero_imputer = SimpleImputer(strategy='constant', fill_value=0)
 
-    if training is True:
-        cat_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+        median_imputed = constants.median_imputed
+        median_imputer = SimpleImputer(strategy='median')
+
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ('categorical', categorical_preproc, categorical),
+                ('zero_imputed', zero_imputer, zero_imputed),
+                ('median_imputed', median_imputer, median_imputed)
+            ],
+            remainder='passthrough',
+        )
+        X = preprocessor.fit_transform(X)
+
+        y = data[constants.target_field]
         target_encoder = LabelBinarizer()
-        X_categorical = cat_encoder.fit_transform(X_categorical)
-        y = target_encoder.fit_transform(y.values).ravel()
+        y = target_encoder.fit_transform(y).ravel()
     else:
-        X_categorical = cat_encoder.transform(X_categorical)
+        X = preprocessor.transform(X)
+        # to pass validation mode and catch exceptions for inference mode
         try:
-            y = target_encoder.transform(y.values).ravel()
-        # Catch the case where y is None because we're doing inference.
-        except AttributeError:
+            y = data[constants.target_field]
+            y = target_encoder.transform(y).ravel()
+        except (ValueError, AttributeError, KeyError):
             pass
 
-    X = np.concatenate([X_continuous, X_categorical], axis=1)
-    return X, y, cat_encoder, target_encoder
+    return X, y, preprocessor, target_encoder

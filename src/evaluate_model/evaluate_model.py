@@ -44,10 +44,8 @@ def _compute_model_metrics_slice(model, data):
 
             X_test, y_test, _, _ = process_data(
                 slice_data,
-                categorical_features=model['cat_features'],
-                target='salary',
                 training=False,
-                cat_encoder=model['cat_encoder'],
+                preprocessor=model['preprocessor'],
                 target_encoder=model['target_encoder']
             )
 
@@ -90,10 +88,8 @@ def go(args):
     logger.info('Processing test data')
     X_test, y_test, _, _ = process_data(
         data,
-        categorical_features=model['cat_features'],
-        target='salary',
         training=False,
-        cat_encoder=model['cat_encoder'],
+        preprocessor=model['preprocessor'],
         target_encoder=model['target_encoder']
     )
 
