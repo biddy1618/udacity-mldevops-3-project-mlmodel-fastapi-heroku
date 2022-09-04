@@ -12,14 +12,14 @@ from .. import constants
 # import scipy.stats
 
 
-def test_column_names(data: pd.DataFrame, prod: bool):
+def test_column_names(data: pd.DataFrame, dev_env: bool):
     '''
     Test columns correspondence and order.
     '''
 
     expected_colums = constants.ind_fields
 
-    if prod:
+    if dev_env:
         expected_colums += [constants.target_field]
 
     these_columns = data.columns.values
@@ -28,7 +28,7 @@ def test_column_names(data: pd.DataFrame, prod: bool):
     assert list(expected_colums) == list(these_columns)
 
 
-def test_cat_columns_values(data: pd.DataFrame, prod: bool):
+def test_cat_columns_values(data: pd.DataFrame, dev_env: bool):
     '''
     Test data for invalid values.
     '''
@@ -51,7 +51,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
     sex_data = set(data['sex'].unique())
     native_country_data = set(data['native_country'].unique())
 
-    if prod:
+    if dev_env:
         salary = constants.salary
         salary_data = set(data['salary'].unique())
 
@@ -82,7 +82,7 @@ def test_cat_columns_values(data: pd.DataFrame, prod: bool):
         errors.append(
             ('`native_country` contains unknown values - '
              f'{native_country_data.difference(native_country)}.'))
-    if prod and not salary_data.issubset(salary):
+    if dev_env and not salary_data.issubset(salary):
         errors.append(
             ('`salary` contains unknown values - '
              f'{salary_data.difference(salary)}.'))

@@ -42,8 +42,8 @@ stages:
       md5: 57aa5d76f0ce31d5ad4089ac18d1f3b4
       size: 2833283
     - path: src/train_model
-      md5: 644fd5274bb4dd57db652ce806ba8e0e.dir
-      size: 17945
+      md5: 374ce6f45743385351c0f92da70b9f17.dir
+      size: 17969
       nfiles: 10
     params:
       params.yaml:
