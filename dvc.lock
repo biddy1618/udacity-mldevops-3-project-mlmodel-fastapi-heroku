@@ -58,9 +58,12 @@ stages:
     cmd: pytest src/check_data/ -vv --data_path src/data/census_clean.csv
     deps:
     - path: src/check_data
-      md5: aec162ca3291683840fee0e44a3d029e.dir
-      size: 9712
-      nfiles: 6
+      md5: ee5a9461880dfd7e1f986db64a7386ff.dir
+      size: 9640
+      nfiles: 5
+    - path: src/conftest.py
+      md5: a071686b97ff1298bdb7788b7ac18145
+      size: 1731
     - path: src/data/census_clean.csv
       md5: 38efc907adc42e60a4b0ed7bddc4a1b2
       size: 3541549
