@@ -19,7 +19,7 @@ from .api_models.models import Person, GenericResponse, Prediction
 from .api_models import helper
 
 
-logger = logging.getLogger("uvicorn")
+logger = logging.getLogger('uvicorn')
 try:
     with open(Path.cwd().joinpath('params.yaml'), 'rb') as f:
         params = yaml.safe_load(f)
@@ -43,7 +43,7 @@ except Exception as e:
     raise e
 
 
-@app.get("/", response_model=GenericResponse)
+@app.get('/', response_model=GenericResponse)
 async def get_info():
     '''
     Path for retrieving greeting.
@@ -58,7 +58,7 @@ async def get_info():
         }
 
 
-@app.post("/persons/", response_model=Prediction)
+@app.post('/persons/', response_model=Prediction)
 async def create_item(person: Person) -> dict:
     '''
     Path for predicting if person earns more than 50k or less.

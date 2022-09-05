@@ -5,7 +5,7 @@ Author: Dauren Baitursyn
 Date: 02.09.22
 
 '''
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from typing import Optional
 
 
@@ -38,6 +38,12 @@ class Person(BaseModel):
         default=None, title='`hours_per_week` field', ge=1, le=99)
     native_country: Optional[str] = Field(
         default=None, title='`native_country` field')
+
+    @validator('sex')
+    def c_match(cls, v):
+        if v not in ['Male', 'Female']:
+            raise ValueError('Sex must be in [Male, Female]')
+        return v
 
 
 class GenericResponse(BaseModel):

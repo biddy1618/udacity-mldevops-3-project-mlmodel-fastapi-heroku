@@ -57,21 +57,107 @@ def dev_env(request):
 
 @pytest.fixture
 def data_valid():
-    data = {
-        'age': 35,
-        'workclass': 'Private',
-        'fnlgt': 323143,
-        'education': 'Assoc-voc',
-        'education_num': 11,
-        'marital_status': 'Married-csv-spouse',
-        'occupation': 'Sales',
-        'relationship': 'Husbanb',
-        'race': 'White',
-        'sex': 'Male',
-        'capital_gain': 0,
-        'capital_loss': 0,
-        'hours_per_week': 45,
-        'native_country': 'United-States'
-    }
+    data = [
+        ({
+            'age': 35,
+            'workclass': 'Private',
+            'fnlgt': 323143,
+            'education': 'Assoc-voc',
+            'education_num': 11,
+            'marital_status': 'Married-csv-spouse',
+            'occupation': 'Sales',
+            'relationship': 'Husbanb',
+            'race': 'White',
+            'sex': 'Male',
+            'capital_gain': 0,
+            'capital_loss': 0,
+            'hours_per_week': 45,
+            'native_country': 'United-States'
+        }, 'Valid data'),
+        ({
+            'age': 35,
+            'sex': 'Male'
+        }, 'Valid data with only mandatory fields'),
+        ({
+            'redundant': 'dauren',
+            'age': 35,
+            'sex': 'Male'
+        }, 'Valid data with redundant field')
+    ]
+
+    return data
+
+
+@pytest.fixture
+def data_invalid():
+    data = [
+        ({}, 'Empty data'),
+        ({
+            'age': '35.3',
+            'sex': 'Male'
+        }, 'Invalid field type'),
+        ({
+            'workclass': 'string',
+            'fnlgt': 0,
+            'education': 'string',
+            'education_num': 0,
+            'marital_status': 'string',
+            'occupation': 'string',
+            'relationship': 'string',
+            'race': 'string',
+            'capital_gain': 0,
+            'capital_loss': 0,
+            'hours_per_week': 99,
+            'native_country': 'string'
+        }, 'Invalid data without mandatory fields'),
+        ({
+            'age': 16,
+            'sex': 'Male'
+        }, 'Invalid age data'),
+        ({
+            'age': 91,
+            'sex': 'Male'
+        }, 'Invalid age data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'education_num': -1,
+        }, 'Invalid education_num data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'education_num': 17,
+        }, 'Invalid education_num data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'capital_gain': -1,
+        }, 'Invalid capital_gain data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'capital_gain': 100000,
+        }, 'Invalid capital_gain data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'capital_loss': -1,
+        }, 'Invalid capital_loss data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'capital_loss': 100000,
+        }, 'Invalid capital_loss data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'hours_per_week': -1,
+        }, 'Invalid hours_per_week data'),
+        ({
+            'age': 35,
+            'sex': 'Male',
+            'hours_per_week': 100,
+        }, 'Invalid hours_per_week data')
+    ]
 
     return data
