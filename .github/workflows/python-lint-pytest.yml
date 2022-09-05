@@ -33,6 +33,7 @@ jobs:
       run: |
         dvc remote modify gdrive --local gdrive_use_service_account true
         dvc remote modify gdrive --local gdrive_service_account_json_file_path /dev/null
+        dvc pull --remote gdrive clean_data
         dvc pull --remote gdrive train_model
     - name: Install dependencies
       run: |
@@ -43,7 +44,7 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 79 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=79 --statistics
+        flake8 . --count --exit-zero --max-complexity=16 --max-line-length=79 --statistics
     - name: Test API with pytest
       run: |
         pytest ./src/
