@@ -6,6 +6,7 @@ Date: 02.09.22
 '''
 import logging
 import yaml
+import os
 
 import pandas as pd
 
@@ -17,6 +18,13 @@ from .train_model.ml.model import inference
 from .train_model.ml.data import process_data
 from .api_models.models import Person, GenericResponse, Prediction
 from .api_models import helper
+
+
+if 'DYNO' in os.environ and os.path.isdir(".dvc"):
+    os.system('dvc config core.no_scm true')
+    if os.system('dvc pull --remote gdrive train_model') != 0:
+        exit('dvc pull failed')
+    os.system('rm -r .dvc .apt/usr/lib/dvc')
 
 
 logger = logging.getLogger('uvicorn')
