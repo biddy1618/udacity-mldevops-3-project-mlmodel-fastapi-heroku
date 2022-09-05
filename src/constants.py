@@ -4,6 +4,7 @@ Constants.
 Author: Dauren Baitursyn
 Date: 26.08.22
 '''
+from collections import defaultdict
 
 # Field definitions
 ind_fields = [
@@ -23,7 +24,7 @@ num_fields = [
 
 mandatory_fields = ['age', 'sex']
 
-zero_imputed = ['fnlgt', 'capital_gain', 'capital_loss']
+zero_imputed = ['fnlgt', 'education_num', 'capital_gain', 'capital_loss']
 median_imputed = ['hours_per_week']
 
 
@@ -144,3 +145,22 @@ native_country = set([
 ])
 
 salary = set(['<=50K', '>50K'])
+
+education_map = defaultdict(int, {
+        'Preschool': 1,
+        '1st-4th': 2,
+        '5th-6th': 3,
+        '7th-8th': 4,
+        '9th': 5,
+        '10th': 6,
+        '11th': 7,
+        '12th': 8,
+        'HS-grad': 9,
+        'Some-college': 10,
+        'Assoc-voc': 11,
+        'Assoc-acdm': 12,
+        'Bachelors': 13,
+        'Masters': 14,
+        'Prof-school': 15,
+        'Doctorate': 16}
+)

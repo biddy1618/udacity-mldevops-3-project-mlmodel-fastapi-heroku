@@ -15,6 +15,7 @@ stages:
     - ${clean_data.clean_data}
     - src/check_data
     - src/conftest.py
+    - src/constants.py
   split_data:
     cmd: >-
       python -m src.split_data.split_data
@@ -40,6 +41,7 @@ stages:
     deps:
     - ${split_data.split_train}
     - src/train_model
+    - src/constants.py
     outs:
     - ${train_model.model_path}
     params:

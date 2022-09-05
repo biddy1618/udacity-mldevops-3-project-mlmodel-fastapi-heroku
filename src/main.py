@@ -16,6 +16,7 @@ from fastapi.encoders import jsonable_encoder
 from .train_model.ml.model import inference
 from .train_model.ml.data import process_data
 from .api_models.models import Person, GenericResponse, Prediction
+from .api_models import helper
 
 
 logger = logging.getLogger("uvicorn")
@@ -70,6 +71,7 @@ async def create_item(person: Person) -> dict:
     '''
     logger.info('Making prediction')
     person = pd.DataFrame(jsonable_encoder([person]))
+    person['education_num'] = helper.map_education(person['education'])
 
     x, _, _, _ = process_data(
         data=person,
