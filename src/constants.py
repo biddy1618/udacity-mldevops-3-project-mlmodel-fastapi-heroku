@@ -7,25 +7,26 @@ Date: 26.08.22
 from collections import defaultdict
 
 # Field definitions
-ind_fields = [
+ind_fields = tuple([
     'age', 'workclass', 'fnlgt', 'education', 'education_num',
     'marital_status', 'occupation', 'relationship', 'race', 'sex',
-    'capital_gain', 'capital_loss', 'hours_per_week', 'native_country',
-]
+    'capital_gain', 'capital_loss', 'hours_per_week', 'native_country'
+])
 
 target_field = 'salary'
 
-cat_fields = [
+cat_fields = tuple([
     'workclass', 'education', 'marital_status', 'occupation',
-    'relationship', 'race', 'sex', 'native_country']
-num_fields = [
+    'relationship', 'race', 'sex', 'native_country'])
+num_fields = tuple([
     'age', 'fnlgt', 'education_num', 'capital_gain',
-    'capital_loss', 'hours_per_week']
+    'capital_loss', 'hours_per_week'])
 
-mandatory_fields = ['age', 'sex']
+mandatory_fields = tuple(['age', 'sex'])
 
-zero_imputed = ['fnlgt', 'education_num', 'capital_gain', 'capital_loss']
-median_imputed = ['hours_per_week']
+zero_imputed = tuple(
+    ['fnlgt', 'education_num', 'capital_gain', 'capital_loss'])
+median_imputed = tuple(['hours_per_week'])
 
 
 # Field values

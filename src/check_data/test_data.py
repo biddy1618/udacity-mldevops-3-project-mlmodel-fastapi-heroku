@@ -17,10 +17,10 @@ def test_column_names(data: pd.DataFrame, dev_env: bool):
     Test columns correspondence and order.
     '''
 
-    expected_colums = constants.ind_fields
+    expected_colums = list(constants.ind_fields)
 
     if dev_env:
-        expected_colums += [constants.target_field]
+        expected_colums = expected_colums + list([constants.target_field])
 
     these_columns = data.columns.values
 

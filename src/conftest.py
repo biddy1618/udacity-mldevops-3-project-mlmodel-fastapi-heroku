@@ -8,8 +8,10 @@ Date: 26.08.22
 import pytest
 import yaml
 import logging
-from pathlib import Path
 import pandas as pd
+
+from pathlib import Path
+from joblib import load
 
 logger = logging.getLogger()
 
@@ -17,18 +19,24 @@ try:
     with open(Path.cwd().joinpath('params.yaml'), 'rb') as f:
         params = yaml.safe_load(f)
     data_path = params['clean_data']['clean_data']
+    model_path = params['train_model']['model_path']
 except FileNotFoundError as e:
     logger.error('`params.yaml` file not found.')
     raise e
 except ValueError as e:
     logger.error(
         '`params.yaml` has no key `clean_data.clean_data` for clean data')
+    logger.error(
+        '`params.yaml` has no key `train_model.model_path` for model')
     raise e
 
 
 def pytest_addoption(parser):
     parser.addoption(
         '--data_path', action='store', default=data_path,
+        help='Path for clean data')
+    parser.addoption(
+        '--model_path', action='store', default=model_path,
         help='Path for clean data')
     parser.addoption(
         '--dev', action='store_false', default=True,
@@ -43,9 +51,22 @@ def data(request):
         pytest.fail(
             'You must provide the `--data_path` option on the command line.')
 
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(Path.cwd().joinpath(data_path))
 
     return df
+
+
+@pytest.fixture(scope='session')
+def model(request):
+    model_path = request.config.option.model_path
+
+    if model_path is None:
+        pytest.fail(
+            'You must provide the `--model_path` option on the command line.')
+
+    model = load(Path.cwd().joinpath(model_path))
+
+    return model
 
 
 @pytest.fixture(scope='session')

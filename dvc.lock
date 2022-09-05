@@ -39,14 +39,14 @@ stages:
       0.2 --valid_random_state 48 --model_random_state 48 --model src/model/model.joblib
     deps:
     - path: src/constants.py
-      md5: 3323b4b8d26dd6d53ca47fab1cbd7719
+      md5: 4ecea74e2e85d153531d748ae63b8b2e
       size: 3027
     - path: src/data/train.csv
       md5: 57aa5d76f0ce31d5ad4089ac18d1f3b4
       size: 2833283
     - path: src/train_model
-      md5: 8b6ef609fc9124cdbf2cd83e69fe5e22.dir
-      size: 17967
+      md5: 74f9c693dedb2477a5938b7ddf43f862.dir
+      size: 18023
       nfiles: 10
     params:
       params.yaml:
@@ -61,14 +61,14 @@ stages:
     cmd: pytest src/check_data/ -vv --data_path src/data/census_clean.csv
     deps:
     - path: src/check_data
-      md5: ee5a9461880dfd7e1f986db64a7386ff.dir
-      size: 9640
-      nfiles: 5
+      md5: 70b323f9d8b9db612dfbb28364e767b8.dir
+      size: 8010
+      nfiles: 4
     - path: src/conftest.py
-      md5: a071686b97ff1298bdb7788b7ac18145
-      size: 1731
+      md5: f0aeb0264a5ae013a2fdf8397aee78c5
+      size: 4023
     - path: src/constants.py
-      md5: 3323b4b8d26dd6d53ca47fab1cbd7719
+      md5: 4ecea74e2e85d153531d748ae63b8b2e
       size: 3027
     - path: src/data/census_clean.csv
       md5: 38efc907adc42e60a4b0ed7bddc4a1b2

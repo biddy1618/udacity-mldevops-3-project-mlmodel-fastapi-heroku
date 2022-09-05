@@ -53,8 +53,7 @@ def process_data(
             Trained LabelBinarizer if training is True, otherwise
             returns the binarizer passed in.
     '''
-
-    X = data[constants.ind_fields]
+    X = data.loc[:, constants.ind_fields]
     y = np.array([])
     if training:
         categorical = constants.cat_fields
@@ -77,14 +76,14 @@ def process_data(
         )
         X = preprocessor.fit_transform(X)
 
-        y = data[constants.target_field]
+        y = data.loc[:, constants.target_field]
         target_encoder = LabelBinarizer()
         y = target_encoder.fit_transform(y).ravel()
     else:
         X = preprocessor.transform(X)
         # to pass validation mode and catch exceptions for inference mode
         try:
-            y = data[constants.target_field]
+            y = data.loc[:, constants.target_field]
             y = target_encoder.transform(y).ravel()
         except (ValueError, AttributeError, KeyError):
             pass

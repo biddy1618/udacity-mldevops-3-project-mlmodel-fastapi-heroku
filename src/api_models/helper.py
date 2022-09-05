@@ -1,5 +1,8 @@
 '''
 Molule for helper functions.
+
+Author: Dauren Baitursyn
+Date: 05.09.22
 '''
 from .. import constants
 
