@@ -16,6 +16,8 @@
  ┃ ┣ 📂api_tests                    # API tests
  ┃ ┃ ┣ 🐍__init__.py
  ┃ ┃ ┗ 🐍test_api.py
+ ┃ ┣ 📂api_tests_live               # Live API tests 
+ ┃ ┃ ┗ 🐍test_api_live.py
  ┃ ┣ 📂check_data                   # Tests for clean data (part of DVC stages)
  ┃ ┃ ┣ 🐍__init__.py
  ┃ ┃ ┗ 🐍test_data.py
@@ -67,7 +69,6 @@
  ┃ ┣ 📄README-data.md               # Information on the data
  ┃ ┣ 📄README.md                    # Information on the source code
  ┃ ┣ 🐍__init__.py
- ┃ ┣ 🐍check_api_live.py            # Test live API
  ┃ ┣ 🐍conftest.py                  # PyTest fixtures
  ┃ ┣ 🐍constants.py                 # Module to hold constants
  ┃ ┣ ❗environment-dev.yml          # Conda environment definition for DEV mode

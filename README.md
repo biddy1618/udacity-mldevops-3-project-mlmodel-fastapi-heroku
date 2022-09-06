@@ -22,7 +22,7 @@ The contents of the JSON file should something like as follows:
 
 You can use this key to log in to your DVC account. Read more on [how to setup Google Drive remote using service account](https://dvc.org/doc/user-guide/setup-google-drive-remote#using-service-accounts).
 
-Details on the data source can be [read here](src/readme-data.md). Acquire the raw data, save it under `src/data/census.csv`, and add it to DVC tracking:
+Details on the data source can be [read here](src/README-data.md). Acquire the raw data, save it under `src/data/census.csv`, and add it to DVC tracking:
 ```bash
 dvc add src/data/census.csv
 ```
@@ -58,7 +58,7 @@ Add [Google Drive JSON account key](https://dvc.org/doc/user-guide/setup-google-
 The environment variable `GDRIVE_CREDENTIALS_DATA` stores the GDrive account key in JSON format and is used for authentification for DVC. Read more [here](https://dvc.org/doc/user-guide/setup-google-drive-remote#authorization)
 
 ## Data
-Read how to get the raw data in [`readme-data.md`](src/readme-data.md).
+Read how to get the raw data in [`README-data.md`](src/README-data.md).
 
 ## DVC stages
 
@@ -95,6 +95,8 @@ EDA can be accessed in the [following notebook](src/eda/EDA.ipynb). According to
 
 It is simple Gradient Boosting Classifier from scikit-learn packages with default parameters. Some preprocessing has been done and can be accessed in the [notebook](src/eda/EDA.ipynb) as well as in the `src/train_model/ml/data.py` file.
 
+Model card can be found at [`src/README-model-card.md`](src/README-model-card.md)
+
 ## API Creation
 
 The API is simple RESTful API using FastAPI that implements:
@@ -112,7 +114,7 @@ Full API implementation can be seen at [`src/main.py`](src/main.py) file. Models
 
 App is deployed using Heroku service on free dynos and can be accessed at [__https://dauren-test-project.herokuapp.com__](https://dauren-test-project.herokuapp.com/). No front-end has been implemented.
 
-Details on the API deployment using heroku can be found at this [markdown file](src/dvc_on_heroku_instructions.md).
+Details on the API deployment using heroku can be found at this [markdown file](src/README-deployment.md).
 
 ## More details
 
