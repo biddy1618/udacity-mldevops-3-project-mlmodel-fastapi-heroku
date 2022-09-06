@@ -19,15 +19,16 @@ from .train_model.ml.data import process_data
 from .api_models.models import Person, GenericResponse, Prediction
 from .api_models import helper
 
+logger = logging.getLogger('uvicorn')
 
 if 'DYNO' in os.environ and os.path.isdir(".dvc"):
+    logger.info('Pulling model and clean data from DVC')
     os.system('dvc config core.no_scm true')
     if os.system('dvc pull --remote gdrive train_model') != 0:
         exit('dvc pull failed')
     os.system('rm -r .dvc .apt/usr/lib/dvc')
+    logger.info('Succesfully pulled data from DVC')
 
-
-logger = logging.getLogger('uvicorn')
 try:
     with open(Path.cwd().joinpath('params.yaml'), 'rb') as f:
         params = yaml.safe_load(f)
