@@ -31,4 +31,8 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 ```
 
+## Connect the Heroku app to the GitHub repository
+
+In the Heroku app dashboard, go to `Deploy` tab, and select `Deployment method` - `GitHub`, and select your repository. Select the `Wait for CI to pass before deploy` option to check if CI has passed.
+
 You should be good to go.
