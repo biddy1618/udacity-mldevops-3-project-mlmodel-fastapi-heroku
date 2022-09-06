@@ -49,11 +49,11 @@ distro==1.6.0
 dominate==2.7.0
 dpath==2.0.6
 dulwich==0.20.45
-dvc==2.23.0
-dvc-data==0.2.0
+dvc==2.24.0
+dvc-data==0.4.0
 dvc-gdrive==2.19.0
 dvc-http==2.19.1
-dvc-objects==0.1.16
+dvc-objects==0.2.0
 dvc-render==0.0.9
 dvc-task==0.1.2
 dvclive==0.10.0

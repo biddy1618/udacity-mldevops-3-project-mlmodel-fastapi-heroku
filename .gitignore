@@ -170,3 +170,6 @@ dvc_plots/
 
 # GDrive credentials
 .gdrive/
+
+# EDA files
+eda/model_pipeline.joblib

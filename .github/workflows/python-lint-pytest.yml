@@ -26,7 +26,7 @@ jobs:
     - name: Set up DVC
       uses: iterative/setup-dvc@v1
       with:
-        version: '2.23.0'
+        version: '2.24.0'
     - name: Download model from DVC
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
