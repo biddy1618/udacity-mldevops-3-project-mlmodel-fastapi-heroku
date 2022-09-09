@@ -12,7 +12,7 @@ def map_education(education):
     Map education to its ordinal integer (number).
 
     Args:
-        df (pd.Series): Education series.
+        education (pd.Series): Education series.
 
     Returns:
         pd.Series: Integener-mapped series for education column.
