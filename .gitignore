@@ -172,4 +172,4 @@ dvc_plots/
 .gdrive/
 
 # EDA files
-eda/model_pipeline.joblib
+src/eda/model_pipeline.joblib

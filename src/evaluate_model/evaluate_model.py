@@ -68,6 +68,46 @@ def _compute_model_metrics_slice(model, data):
     return slice_metrics
 
 
+def _get_slice_metrics_txt(metrics):
+    '''
+    Format slice metrics to txt format.
+
+    Args:
+        metrics (dict): Dictionary with slice metrics.
+
+    Returns:
+        pd.DataFrame: DataFrame with slice scores.
+    '''
+
+    precision = []
+    recall = []
+    f1_score = []
+    av_precision = []
+    num_observations = []
+
+    index = []
+
+    for col in metrics:
+        for val in metrics[col]:
+            precision.append(metrics[col][val]['Precision'])
+            recall.append(metrics[col][val]['Recall'])
+            f1_score.append(metrics[col][val]['F1 score'])
+            av_precision.append(metrics[col][val]['Average precision'])
+            num_observations.append(
+                metrics[col][val]['Number of observations'])
+            index.append(col + ' - ' + val)
+
+    return pd.DataFrame(
+            index=index,
+            data={
+                'Precision': precision,
+                'Recall': recall,
+                'F1 score': f1_score,
+                'Average precision': av_precision,
+                'Number of observations': num_observations}
+            ).round(3)
+
+
 def go(args):
     '''
     Main function for evaluating model.
@@ -116,6 +156,14 @@ def go(args):
 
     logger.info('Making inference on slices of test data')
     model_slice_metrics = _compute_model_metrics_slice(model, data)
+
+    slice_txt = _get_slice_metrics_txt(model_slice_metrics)
+
+    logger.info(f'Saving slice metrics to {PATH_METRICS_FOLDER} folder')
+    with open(Path(PATH_METRICS_FOLDER).joinpath('slice_output.txt'), 'w') \
+            as slice_file:
+        slice_txt.to_string(slice_file)
+    logger.info('Saved slice metrics')
 
     model_metrics = {
         'Precision': precision,

@@ -1,0 +1,14 @@
+                               Precision  Recall  F1 score  Average precision  Number of observations
+relationship - Husband             0.769   0.647     0.703              0.835                    2612
+relationship - Own-child           0.875   0.500     0.636              0.723                     988
+relationship - Unmarried           0.737   0.304     0.431              0.578                     736
+relationship - Not-in-family       0.920   0.272     0.420              0.615                    1663
+relationship - Wife                0.803   0.680     0.736              0.843                     319
+relationship - Other-relative      0.000   0.000     0.000              0.138                     190
+race - White                       0.784   0.608     0.685              0.817                    5577
+race - Asian-Pac-Islander          0.617   0.547     0.580              0.738                     192
+race - Amer-Indian-Eskimo          1.000   0.000     0.000              0.231                      49
+race - Black                       0.795   0.449     0.574              0.740                     630
+race - Other                       0.667   0.333     0.444              0.643                      60
+sex - Male                         0.773   0.609     0.681              0.817                    4368
+sex - Female                       0.810   0.523     0.636              0.756                    2140

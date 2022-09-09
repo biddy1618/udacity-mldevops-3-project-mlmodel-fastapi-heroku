@@ -37,13 +37,14 @@
  ┃ ┃ ┣ 🐍__init__.py
  ┃ ┃ ┗ 🐍evaluate_model.py
  ┃ ┣ 📂metrics                      # Folder to hold metrics data
- ┃ ┃ ┗ 📄.gitignore
+ ┃ ┃ ┣ 📄.gitignore
+ ┃ ┃ ┗ 📄slice_output.txt           # File with slice metrics
  ┃ ┣ 📂model                        # Folder to hold model
  ┃ ┃ ┗ 📄.gitignore
  ┃ ┣ 📂screenshots                  # Screenshots
  ┃ ┃ ┣ 📄.gitignore
- ┃ ┃ ┣ 🖼️ap-root-path.png
  ┃ ┃ ┣ 🖼️api-persons-path.png
+ ┃ ┃ ┣ 🖼️api-root-path.png
  ┃ ┃ ┣ 🖼️coverage-report.png
  ┃ ┃ ┣ 🖼️dvc-dag.png
  ┃ ┃ ┣ 🖼️dvc-studio-metrics.png
@@ -53,7 +54,8 @@
  ┃ ┃ ┣ 🖼️git-actions-secret.png
  ┃ ┃ ┣ 🖼️heroku-key.png
  ┃ ┃ ┣ 🖼️tests-general.png
- ┃ ┃ ┗ 🖼️tests-live-api.png
+ ┃ ┃ ┣ 🖼️tests-live-api.png
+ ┃ ┃ ┗ 🖼️tests-sanity-check.png
  ┃ ┣ 📂split_data                   # Folder to split the data (part of DVC stages)
  ┃ ┃ ┣ 🐍__init__.py
  ┃ ┃ ┗ 🐍split_data.py
@@ -111,6 +113,12 @@ In order to test the live API, type following `pytest ./src/api_tests_live/ -vv`
 ### Note
 
 Specify your own project URL in `src/api_tests_live/test_api_live.py` in `URL_TO_TEST` variable.
+
+## Sanity check
+
+Sanity check is passing as can be seen:
+
+![sanity-check](src/screenshots/test-sanity-check.png)
 
 ## Test coverage
 

@@ -65,8 +65,8 @@ stages:
       size: 8030
       nfiles: 4
     - path: src/conftest.py
-      md5: 673719343ae9e2e9cb6b61818686c020
-      size: 4631
+      md5: 91239aa7fbaf06bb923b5c897555eb08
+      size: 5638
     - path: src/constants.py
       md5: dfafbbf5a28ed9b4e7c5f309a6284b58
       size: 3074
@@ -81,8 +81,8 @@ stages:
       md5: c9db0e484807efe9b1991f49857f4313
       size: 708421
     - path: src/evaluate_model
-      md5: ba809e6843572ffc484fc6421c2194cf.dir
-      size: 8723
+      md5: b2709c889c397d2a4950b83ccefb7e8e.dir
+      size: 11064
       nfiles: 4
     - path: src/model/model.joblib
       md5: 830e0dfd634288a02d9acf8233855dcb

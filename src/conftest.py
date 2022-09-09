@@ -77,6 +77,50 @@ def dev_env(request):
 
 
 @pytest.fixture
+def data_true():
+    data = {
+        'age': 45,
+        'workclass': 'Private',
+        'fnlgt': 1484705,
+        'education': 'Doctorate',
+        'education_num': 16,
+        'marital_status': 'Married-csv-spouse',
+        'occupation': 'Prof-specialty',
+        'relationship': 'Husbanb',
+        'race': 'White',
+        'sex': 'Male',
+        'capital_gain': 99999,
+        'capital_loss': 0,
+        'hours_per_week': 45,
+        'native_country': 'United-States'
+    }
+
+    return data
+
+
+@pytest.fixture
+def data_false():
+    data = {
+        'age': 17,
+        'workclass': 'Without-pay',
+        'fnlgt': 12285,
+        'education': '11th',
+        'education_num': 7,
+        'marital_status': 'Never-married',
+        'occupation': 'Unknown',
+        'relationship': 'Unmarried',
+        'race': 'Other',
+        'sex': 'Male',
+        'capital_gain': 0,
+        'capital_loss': 0,
+        'hours_per_week': 45,
+        'native_country': 'United-States'
+    }
+
+    return data
+
+
+@pytest.fixture
 def data_valid():
     data = [
         ({

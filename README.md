@@ -1,5 +1,7 @@
 # Full pipeline for ML project - from cleaning data to deploying ML model
 
+Repo link - https://github.com/biddy1618/udacity-mldevops-3-project-mlmodel-fastapi-heroku
+
 ## Quick Local Set up
 
 ### Using conda environment (version of conda - `4.14.0` and python - `3.9.13`)
@@ -102,7 +104,7 @@ Model card can be found at [`src/README-model-card.md`](src/README-model-card.md
 The API is simple RESTful API using FastAPI that implements:
 * GET on the root - `/` - giving a welcome message.
 
-![root-path](src/screenshots/ap-root-path.png)
+![root-path](src/screenshots/api-root-path.png)
 * POST on the following path - `/persons/` - that does model inference.
 
 ![persons-path](src/screenshots/api-persons-path.png)

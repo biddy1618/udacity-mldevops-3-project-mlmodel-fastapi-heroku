@@ -39,6 +39,26 @@ class Person(BaseModel):
     native_country: Optional[str] = Field(
         default=None, title='`native_country` field')
 
+    class Config:
+        schema_extra = {
+            'example': {
+                'age': 35,
+                'workclass': 'Private',
+                'fnlgt': 323143,
+                'education': 'Assoc-voc',
+                'education_num': 11,
+                'marital_status': 'Married-csv-spouse',
+                'occupation': 'Sales',
+                'relationship': 'Husbanb',
+                'race': 'White',
+                'sex': 'Male',
+                'capital_gain': 0,
+                'capital_loss': 0,
+                'hours_per_week': 45,
+                'native_country': 'United-States'
+            }
+        }
+
     @validator('sex')
     def c_match(cls, v):
         if v not in ['Male', 'Female']:
@@ -49,6 +69,24 @@ class Person(BaseModel):
 class GenericResponse(BaseModel):
     message: str
 
+    class Config:
+        schema_extra = {
+            'example': {
+                'message': (
+                    'To test, please, send `POST` request with '
+                    'data on the person to `/persons/` to get prediction '
+                    'on the salary.'
+                )
+            }
+        }
+
 
 class Prediction(BaseModel):
     prediction: str
+
+    class Config:
+        schema_extra = {
+            'example': {
+                'prediction': '>50K | <=50K'
+            }
+        }
