@@ -2,6 +2,16 @@
 
 Repo link - https://github.com/biddy1618/udacity-mldevops-3-project-mlmodel-fastapi-heroku
 
+## Project Description
+
+This project showcases how to deploy model using CI/CD. It has following features:
+* DVC for data tracking, and DVC stages for modularization and automation
+    * Unit tests
+* API using FastAPI
+* CI by GitHub actions
+* CD by Heroku
+* Model Card
+
 ## Quick Local Set up
 
 ### Using conda environment (version of conda - `4.14.0` and python - `3.9.13`)
